@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f7f6f5;
+  --foreground: #171717;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button,
+input,
+textarea {
+  @apply outline-none border-none bg-transparent;
+}
+
+input[type="date"] {
+  -webkit-appearance: none; 
+  -moz-appearance: textfield;
+  appearance: none; 
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none; 
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-color: #D4D4D8;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
