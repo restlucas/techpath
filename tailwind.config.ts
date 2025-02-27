@@ -12,7 +12,8 @@ export default {
         dark: "#131F24",
         foreground: "#DCE6EC",
         border: "#37464F",
-        selected: "#49BFF7",
+        blue: "#49BFF7",
+        orange: "#E44D26",
       },
       backgroundColor: {
         selected: "#202F36",

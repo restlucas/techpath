@@ -1,0 +1,15 @@
+{
+  "navigation": {
+    "learn": "Aprender",
+    "challenges": "Desafios",
+    "quests": "Missões",
+    "leaderboards": "Leaderboards",
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "exit": "Sair"
+  },
+  "learn": {
+    "title": "Trilhas",
+    "subtitle": "Selecione a trilha que deseja aprender"
+  }
+}

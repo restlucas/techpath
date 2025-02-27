@@ -1,5 +1,9 @@
-// import { ProtectedPage } from "@/components/ProtectedPage";
-import { Navigation } from "@/components/Navigation";
+"use client";
+
+import { ProtectedPage } from "@/components/ProtectedPage";
+
+import { store } from "@/redux/store";
+import { Provider } from "react-redux";
 
 export default function HomeLayout({
   children,
@@ -7,13 +11,8 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <div
-        className={`flex h-screen w-full flex-col divide-x-2 divide-border antialiased min-[900px]:flex-row`}
-      >
-        <Navigation />
-        <main className="flex-grow overflow-x-hidden p-6">{children}</main>
-      </div>
-    </>
+    <ProtectedPage>
+      <Provider store={store}>{children}</Provider>
+    </ProtectedPage>
   );
 }

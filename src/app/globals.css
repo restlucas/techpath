@@ -16,22 +16,22 @@ body {
 button,
 input,
 textarea {
-  @apply outline-none border-none bg-transparent;
+  @apply border-transparent bg-transparent outline-none;
 }
 
 input[type="date"] {
-  -webkit-appearance: none; 
+  -webkit-appearance: none;
   -moz-appearance: textfield;
-  appearance: none; 
+  appearance: none;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none; 
+  display: none;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 9999px;
-  background-color: #D4D4D8;
+  background-color: #49bff7;
 }
 
 ::-webkit-scrollbar-track {
