@@ -28,6 +28,7 @@ export const GET_TRAIL = gql`
           id
           name
           description
+          unlocked
           topics {
             id
             name

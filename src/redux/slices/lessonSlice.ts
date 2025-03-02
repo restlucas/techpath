@@ -6,7 +6,6 @@ export type Answer = {
   text: string;
   order: number | null;
   pairId: number | null;
-  conceptId: number | null;
 };
 
 export type Question = {
@@ -108,13 +107,11 @@ export const getHistory = (
 };
 
 export const getResults = (state: State): number => {
-  return 1;
+  const totalXpObtained = state.answeredQuestions.reduce((sum, question) => {
+    return question.isCorrectAnswer ? sum + question.xp : sum;
+  }, 0);
 
-  // const totalXpObtained = state.answeredQuestions.reduce((sum, question) => {
-  // return question.isCorrectAnswer ? sum + question.xp : sum;
-  // }, 0);
-
-  // return totalXpObtained;
+  return totalXpObtained;
 };
 
 export const makeLessonFinished = async () => {};

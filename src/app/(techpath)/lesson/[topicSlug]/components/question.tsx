@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from "react";
 import {
-  getHistory,
   getQuestion,
   Lesson,
-  Question,
+  Question as QuestionType,
 } from "@/redux/slices/lessonSlice";
-import { MatchPairsQuestion, MultipleChoiceQuestion } from "./answerOptions";
+import { TypeCorrectOrder, TypeGeneric, TypeMatchPairs } from "./answersTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
@@ -19,16 +18,18 @@ type QuestionLessonProps = {
   ) => void;
 };
 
-export function LessonQuestion({
+export function Question({
   lesson,
   handleHasFinishedLesson,
 }: QuestionLessonProps) {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [activeQuestion, setActiveQuestion] = useState<Question | null>(null);
+  const [activeQuestion, setActiveQuestion] = useState<QuestionType | null>(
+    null,
+  );
 
-  // const history = useSelector(
-  //   (state: RootState) => state.lesson.answeredQuestions,
-  // );
+  const lessonHistory = useSelector(
+    (state: RootState) => state.lesson.answeredQuestions,
+  );
 
   const handleNextQuestion = () => {
     setQuestionIndex(questionIndex + 1);
@@ -36,11 +37,11 @@ export function LessonQuestion({
 
   useEffect(() => {
     const totalOfQuestions = lesson.questions.length;
-    const totalOfWrongQuestionsAcceptable = Math.floor(0.8 * totalOfQuestions);
-    // const totalOfWrongQuestions = lessonHistory.filter(
-    //   (result) => result.isCorrectAnswer === false,
-    // ).length;
-    const totalOfWrongQuestions = 0;
+    const totalOfWrongQuestionsAcceptable =
+      totalOfQuestions - Math.floor(0.8 * totalOfQuestions);
+    const totalOfWrongQuestions = lessonHistory.filter(
+      (result) => result.isCorrectAnswer === false,
+    ).length;
 
     if (
       totalOfQuestions > 0 &&
@@ -67,33 +68,32 @@ export function LessonQuestion({
     <>
       <p className="mt-8">{activeQuestion.text}</p>
 
-      {activeQuestion.type === "MULTIPLE_CHOICE" && (
-        <MultipleChoiceQuestion
+      {(activeQuestion.type === "MULTIPLE_CHOICE" ||
+        activeQuestion.type === "IDENTIFY_ERROR" ||
+        activeQuestion.type === "TRUE_FALSE" ||
+        activeQuestion.type === "COMPLETE_THE_SENTENCE") && (
+        <TypeGeneric
           activeQuestion={activeQuestion}
           handleNextQuestion={handleNextQuestion}
           answers={activeQuestion.answers}
         />
       )}
       {activeQuestion.type === "MATCH_PAIRS" && (
-        <MatchPairsQuestion
+        <TypeMatchPairs
           activeQuestion={activeQuestion}
           handleNextQuestion={handleNextQuestion}
           handleHasFinishedLesson={handleHasFinishedLesson}
           answers={activeQuestion.answers}
         />
       )}
-      {/* <div className="mt-20 flex h-auto w-full flex-col gap-4">
-        {activeQuestion.answers.map((answer) => (
-          <button
-            key={answer.id}
-            onClick={() => setSelectedAnswer(answer)}
-            disabled={checkAnswer !== null}
-            className={`w-full rounded-lg border-2 p-6 text-left duration-200 ${getButtonStyles(answer)}`}
-          >
-            {answer.text}
-          </button>
-        ))}
-      </div> */}
+      {activeQuestion.type === "ORDER_CORRECTLY" && (
+        <TypeCorrectOrder
+          activeQuestion={activeQuestion}
+          handleNextQuestion={handleNextQuestion}
+          handleHasFinishedLesson={handleHasFinishedLesson}
+          answers={activeQuestion.answers}
+        />
+      )}
     </>
   );
 }

@@ -15,15 +15,12 @@ export const GET_LESSON = gql`
           xp
           lessonId
           correctAnswer
-          errorPosition
-          correctStatement
           answers {
             id
             text
             questionId
             order
             pairId
-            conceptId
           }
         }
       }

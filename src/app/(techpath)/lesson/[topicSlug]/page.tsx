@@ -12,7 +12,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ADD_LESSON_RESULTS } from "@/graphql/mutation/lesson.mutation";
 import { updateSession } from "@/utils/session";
 import { GET_LESSON } from "@/graphql/queries/lesson.queries";
-import { LessonQuestion } from "./components/lessonQuestion";
+import { Question } from "./components/question";
 
 export type Answer = {
   id: string;
@@ -20,7 +20,6 @@ export type Answer = {
   text: string;
   order: number | null;
   pairId: number | null;
-  conceptId: number | null;
 };
 
 export type Question = {
@@ -68,7 +67,7 @@ function FinishedLesson({
   const finishLesson = async () => {
     await addLessonResults({
       variables: {
-        totalXpEarned: 100,
+        totalXpEarned: lessonResults,
         completed: true,
         lessonId,
         userId,
@@ -159,7 +158,7 @@ export default function Lesson() {
     return (
       <div className="mt-16 flex h-auto w-[1100px] flex-col px-10 py-6">
         <h1 className="text-4xl font-bold text-blue">{lesson.name}</h1>
-        <LessonQuestion
+        <Question
           lesson={lesson}
           handleHasFinishedLesson={handleHasFinishedLesson}
         />
