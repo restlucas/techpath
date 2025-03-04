@@ -1,5 +1,7 @@
 "use client";
 
+import { GET_LEADERBOARD } from "@/graphql/queries/leaderboard.queries";
+import { useQuery } from "@apollo/client";
 import { FlagBanner, Medal, Trophy } from "@phosphor-icons/react";
 import Image from "next/image";
 
@@ -13,14 +15,44 @@ type UserInfo = {
   };
 };
 
-type LeaderboardListProps = {
-  data: UserInfo[];
-};
+export function LeaderboardList() {
+  const { data, loading, error } = useQuery(GET_LEADERBOARD, {
+    pollInterval: 5000,
+  });
 
-export function LeaderboardList({ data }: LeaderboardListProps) {
+  if (loading) {
+    return (
+      <div className="flex h-[300px] items-center justify-center">
+        <p className="w-full rounded-lg border-2 border-border p-6 text-center font-bold shadow-md">
+          Carregando informações
+        </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-[300px] items-center justify-center">
+        <p className="w-full rounded-lg border-2 border-border p-6 text-center font-bold shadow-md">
+          Erro ao carregar informações
+        </p>
+      </div>
+    );
+  }
+
+  if (data && data.leaderboard.data.length === 0) {
+    return (
+      <div className="flex h-[300px] items-center justify-center">
+        <p className="w-full rounded-lg border-2 border-border p-6 text-center font-bold shadow-md">
+          Ainda não há usuários no ranking!
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-12 flex flex-col gap-4">
-      {data.map((user: UserInfo, index: number) => {
+      {data.leaderboard.data.map((user: UserInfo, index: number) => {
         let positionIcon = null;
         if (index === 0) {
           positionIcon = (

@@ -24,6 +24,9 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/login",
   },
+  jwt: {
+    maxAge: 60,
+  },
   callbacks: {
     async jwt({ token, user, profile, account }) {
       if (user) {

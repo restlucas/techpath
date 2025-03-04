@@ -11,8 +11,8 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ProtectedPage>
-      <Provider store={store}>{children}</Provider>
-    </ProtectedPage>
+    <Provider store={store}>
+      <ProtectedPage>{children}</ProtectedPage>
+    </Provider>
   );
 }

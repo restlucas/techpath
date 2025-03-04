@@ -27,11 +27,9 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <NextIntlClientProvider messages={messages}>
-        <AppProviders>
-          <body className={`${quicksand.className} bg-dark text-foreground`}>
-            {children}
-          </body>
-        </AppProviders>
+        <body className={`${quicksand.className} bg-dark text-foreground`}>
+          <AppProviders>{children}</AppProviders>
+        </body>
       </NextIntlClientProvider>
     </html>
   );

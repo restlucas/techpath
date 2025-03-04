@@ -6,14 +6,14 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-axiosInstance.defaults.headers.common["api_key"] =
+axiosInstance.defaults.headers.common["api-key"] =
   process.env.NEXT_PUBLIC_TECHPATH_API_KEY;
 
 axiosInstance.interceptors.request.use(async (config) => {
   const session = await getSession();
 
   if (session?.user?.id) {
-    config.headers["user-id"] = session.user.id;
+    config.headers["x-user-id"] = session.user.id;
   }
 
   return config;

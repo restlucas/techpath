@@ -10,7 +10,7 @@ function Aside({ pathname }: { pathname: string }) {
 
   const links = [
     { href: "/learn", labelKey: "navigation.learn" },
-    { href: "/quests", labelKey: "navigation.quests" },
+    { href: "/missions", labelKey: "navigation.missions" },
     { href: "/leaderboard", labelKey: "navigation.leaderboard" },
     { href: `/profile/${data?.user.username}`, labelKey: "navigation.profile" },
     { href: "/settings", labelKey: "navigation.settings" },

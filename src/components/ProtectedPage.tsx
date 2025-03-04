@@ -1,8 +1,11 @@
 "use client";
 
+import { fetchSession } from "@/redux/slices/authSlice";
+import { AppDispatch } from "@/redux/store";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 interface ProtectedPageProps {
   children: ReactNode;
@@ -11,6 +14,12 @@ interface ProtectedPageProps {
 export function ProtectedPage({ children }: ProtectedPageProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchSession());
+  }, [dispatch]);
 
   useEffect(() => {
     if (status !== "loading" && !session) {

@@ -43,3 +43,16 @@ export const GET_TRAIL = gql`
     }
   }
 `;
+
+export const GET_TRAILS_PROGRESS = gql`
+  query {
+    trailsProgress @rest(type: "TrailsProgress", path: "/trail/progress/user") {
+      data {
+        id
+        name
+        slug
+        completed
+      }
+    }
+  }
+`;

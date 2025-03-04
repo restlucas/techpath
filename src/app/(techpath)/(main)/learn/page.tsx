@@ -3,8 +3,10 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 import { GET_TRAILS } from "@/graphql/queries/trail.queries";
-import client from "@/lib/apolloClient";
 import { Metadata } from "next";
+import { createApolloClient } from "@/lib/apolloClient";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 type Trail = {
   id: string;
@@ -15,11 +17,15 @@ type Trail = {
 };
 
 export const metadata: Metadata = {
-  title: "Learn | techpath",
+  title: "lear | techpath",
 };
 
 export default async function LearnPage() {
+  const session = await getServerSession(authOptions);
+  const client = createApolloClient(session);
+
   const t = await getTranslations("learn");
+
   const {
     data: { trails: trailsResponse },
   } = await client.query({

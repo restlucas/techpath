@@ -1,14 +1,34 @@
 "use client";
 
-import { trails } from "@/constants/data";
+import { GET_TRAILS_PROGRESS } from "@/graphql/queries/trail.queries";
 import { formatSinceDate } from "@/utils/date";
+import { useQuery } from "@apollo/client";
 import { Fire, Lightning } from "@phosphor-icons/react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
+type TrailProgress = {
+  id: string;
+  name: string;
+  slug: string;
+  completed: boolean;
+};
 
 export default function ProfilePage() {
   const { data } = useSession();
   const user = data?.user;
+  const [trailsProgress, setTrailsProgress] = useState<TrailProgress[] | []>(
+    [],
+  );
+
+  const { data: trailsData } = useQuery(GET_TRAILS_PROGRESS);
+
+  useEffect(() => {
+    if (trailsData) {
+      setTrailsProgress(trailsData.trailsProgress.data);
+    }
+  }, [trailsData]);
 
   return (
     <section className="m-auto w-[900px]">
@@ -66,26 +86,26 @@ export default function ProfilePage() {
         <h2 className="text-2xl font-bold">Trilhas</h2>
 
         <div className="mt-4 grid grid-cols-6 gap-4">
-          {trails.map((trail, index) => {
+          {trailsProgress.map((trail: TrailProgress, index: number) => {
             return (
               <div
                 key={index}
-                className={`relative h-[200px] select-none rounded-lg border-2 p-2 ${index === 0 ? "border-green-500 bg-green-500/20" : "border-dashed border-border"}`}
+                className={`relative h-[200px] select-none rounded-lg border-2 p-2 ${trail.completed ? "border-green-500 bg-green-500/20" : "border-dashed border-border"}`}
               >
                 <div
-                  className={`flex h-full w-full flex-col items-center justify-center gap-6 ${index === 0 ? "" : "opacity-20"}`}
+                  className={`flex h-full w-full flex-col items-center justify-center gap-6`}
                 >
                   <Image
-                    src={trail.icon}
+                    src={`/assets/${trail.slug}.svg`}
                     width={50}
                     height={70}
                     alt="Trail icon"
-                    className={`${index !== 0 && "grayscale"}`}
+                    className={`${trail.completed && "grayscale"}`}
                   />
-                  <p className="text-center text-sm font-bold">{trail.label}</p>
+                  <p className="text-center text-sm font-bold">{trail.name}</p>
 
-                  {index !== 0 ? (
-                    <p className="text-xs font-bold">Não iniciado</p>
+                  {!trail.completed ? (
+                    <p className="text-xs font-bold text-blue">Em andamento</p>
                   ) : (
                     <p className="text-xs font-bold text-green-500">
                       Concluído
