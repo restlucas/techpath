@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 
 import { GET_TRAILS } from "@/graphql/queries/trail.queries";
 import client from "@/lib/apolloClient";
+import { Metadata } from "next";
 
 type Trail = {
   id: string;
@@ -11,6 +12,10 @@ type Trail = {
   name: string;
   description: string;
   tags: string;
+};
+
+export const metadata: Metadata = {
+  title: "Learn | techpath",
 };
 
 export default async function LearnPage() {

@@ -199,8 +199,14 @@ export function TypeMatchPairs({
           <button
             key={answer.id}
             onClick={() => handleSelectedPair(answer)}
-            disabled={pairsMatch.length === answers.length / 2}
-            className={`w-full rounded-lg border-2 p-6 text-center duration-200 ${getButtonStyles(answer.id)} ${pairsMatch.length === answers.length / 2 && "pointer-events-none"}`}
+            disabled={
+              pairsMatch.length === answers.length / 2 ||
+              selectedPair.some((pair) => pair.id === answer.id) ||
+              pairsMatch.some((pairObj) =>
+                pairObj.pair.some((pairAnswer) => pairAnswer.id === answer.id),
+              )
+            }
+            className={`w-full text-nowrap rounded-lg border-2 p-6 text-center duration-200 ${getButtonStyles(answer.id)} ${pairsMatch.length === answers.length / 2 && "pointer-events-none"}`}
           >
             {answer.text}
           </button>
