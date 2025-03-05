@@ -44,7 +44,7 @@ export function LeaderboardList() {
     return (
       <div className="flex h-[300px] items-center justify-center">
         <p className="w-full rounded-lg border-2 border-border p-6 text-center font-bold shadow-md">
-          Ainda não há usuários no ranking!
+          Ainda não há usuários no ranking desta semana!
         </p>
       </div>
     );

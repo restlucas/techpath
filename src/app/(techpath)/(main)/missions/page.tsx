@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { MidnightCountdown, NextMondayCountdown } from "@/components/countdown";
 import { GET_MISSIONS } from "@/graphql/queries/mission.queries";
 import { createApolloClient } from "@/lib/apolloClient";
 import { Metadata } from "next";
@@ -46,6 +47,9 @@ export default async function MissionsPage() {
           <h2 className="text-2xl font-bold min-[1100px]:text-4xl">
             Missões do dia
           </h2>
+          <span className="text-xs">
+            expira em <MidnightCountdown />
+          </span>
           <div className="mt-6 divide-y-2 divide-border rounded-lg border-2 border-border shadow-md">
             {dailyMissions.map((mission: MissionProps, index: number) => {
               return (
@@ -80,6 +84,9 @@ export default async function MissionsPage() {
           <h2 className="text-2xl font-bold min-[1100px]:text-4xl">
             Missões da semana
           </h2>
+          <span className="text-xs">
+            expira em <NextMondayCountdown />
+          </span>
           <div className="mt-6 divide-y-2 divide-border rounded-lg border-2 border-border shadow-md">
             {weeklyMissions.map((mission: MissionProps, index: number) => {
               return (

@@ -13,6 +13,7 @@ import { ADD_LESSON_RESULTS } from "@/graphql/mutation/lesson.mutation";
 import { updateSession } from "@/utils/session";
 import { GET_LESSON } from "@/graphql/queries/lesson.queries";
 import { Question } from "./components/question";
+import { playAudio } from "./components/answersTypes";
 
 export type Answer = {
   id: string;
@@ -77,7 +78,11 @@ function FinishedLesson({
 
   useEffect(() => {
     if (lessonStatus === "success") {
+      playAudio("/audios/success.flac");
+
       finishLesson();
+    } else {
+      playAudio("/audios/failure.wav");
     }
   }, [lessonStatus]);
 

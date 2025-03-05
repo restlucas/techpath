@@ -34,6 +34,13 @@ type PairProps = {
   isCorrect: boolean;
 };
 
+export const playAudio = (path: string) => {
+  const audio = new Audio(path);
+  audio.play().catch((err) => {
+    console.error("Erro ao tentar tocar o áudio:", err);
+  });
+};
+
 export function TypeGeneric({
   answers,
   activeQuestion,
@@ -63,6 +70,12 @@ export function TypeGeneric({
 
   const handleCheckAnswer = () => {
     const response = selectedAnswer?.text === correctAnswer;
+
+    if (response) {
+      playAudio("/audios/correct.mp3");
+    } else {
+      playAudio("/audios/wrong.mp3");
+    }
 
     setCheckAnswer(response);
     dispatch(
@@ -176,6 +189,12 @@ export function TypeMatchPairs({
     if (pairsMatch.length === answers.length / 2) {
       const haveIncorrectPair = pairsMatch.some((pair) => !pair.isCorrect);
 
+      if (!haveIncorrectPair) {
+        playAudio("/audios/correct.mp3");
+      } else {
+        playAudio("/audios/wrong.mp3");
+      }
+
       dispatch(
         addAnsweredQuestion({
           questionId: activeQuestion.id,
@@ -258,6 +277,12 @@ export function TypeCorrectOrder({
     const isOrderIncorrect = shuffledAnswers.some(
       (answer, index) => (answer.order as number) - 1 !== index,
     );
+
+    if (!isOrderIncorrect) {
+      playAudio("/audios/correct.mp3");
+    } else {
+      playAudio("/audios/wrong.mp3");
+    }
 
     setStatus(isOrderIncorrect ? "failure" : "success");
   };

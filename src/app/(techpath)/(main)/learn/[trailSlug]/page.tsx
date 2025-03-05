@@ -64,7 +64,7 @@ function TrailContent({ modules }: { modules: Module[] }) {
                         <Link
                           key={index}
                           href={`/lesson/${topic.slug}`}
-                          className={`relative flex min-h-[100px] w-full flex-col rounded-lg border-2 border-border bg-dark p-4 duration-200 ${isTopicCompleted ? "pointer-events-none cursor-not-allowed border-green-600 bg-green-600 line-through" : ""} ${module.unlocked ? "cursor-pointer hover:scale-105 hover:border-blue hover:text-blue" : "cursor-default select-none blur-sm"}`}
+                          className={`relative flex min-h-[100px] w-full flex-col rounded-lg border-2 border-border bg-dark p-4 duration-200 ${isTopicCompleted ? "pointer-events-none cursor-not-allowed border-green-600 bg-green-900 line-through" : ""} ${module.unlocked ? "cursor-pointer hover:scale-105 hover:border-blue hover:text-blue" : "cursor-default select-none blur-sm"}`}
                         >
                           <h1 className="text-base font-bold">{topic.name}</h1>
                           <p className="flex-1 text-xs">{topic.totalXp} xp</p>
