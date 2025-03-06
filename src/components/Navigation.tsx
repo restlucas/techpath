@@ -13,7 +13,6 @@ function Aside({ pathname }: { pathname: string }) {
     { href: "/missions", labelKey: "navigation.missions" },
     { href: "/leaderboard", labelKey: "navigation.leaderboard" },
     { href: `/profile/${data?.user.username}`, labelKey: "navigation.profile" },
-    { href: "/settings", labelKey: "navigation.settings" },
   ];
 
   return (
@@ -35,9 +34,19 @@ function Aside({ pathname }: { pathname: string }) {
           </Link>
         ))}
 
+        <Link
+          href={"/settings"}
+          className={`mt-auto flex cursor-pointer items-center justify-start gap-2 rounded-xl border-2 px-4 py-3 duration-200 hover:bg-selected ${
+            pathname.includes("/settings")
+              ? "border-blue bg-selected text-blue"
+              : "border-transparent"
+          }`}
+        >
+          <span>{t("navigation.settings")}</span>
+        </Link>
         <button
           onClick={() => signOut()}
-          className="mt-auto flex cursor-pointer items-center justify-start gap-2 rounded-xl border-2 px-4 py-3 duration-200 hover:bg-selected"
+          className="flex cursor-pointer items-center justify-start gap-2 rounded-xl border-2 px-4 py-3 duration-200 hover:bg-selected"
         >
           <span className="font-bold uppercase">{t("navigation.exit")}</span>
         </button>

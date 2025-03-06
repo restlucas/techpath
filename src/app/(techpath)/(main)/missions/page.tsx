@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { MidnightCountdown, NextMondayCountdown } from "@/components/countdown";
+import { MidnightCountdown, NextMondayCountdown } from "@/components/Countdown";
 import { GET_MISSIONS } from "@/graphql/queries/mission.queries";
 import { createApolloClient } from "@/lib/apolloClient";
 import { Metadata } from "next";
@@ -51,33 +51,39 @@ export default async function MissionsPage() {
             expira em <MidnightCountdown />
           </span>
           <div className="mt-6 divide-y-2 divide-border rounded-lg border-2 border-border shadow-md">
-            {dailyMissions.map((mission: MissionProps, index: number) => {
-              return (
-                <div key={index} className="relative gap-2 p-6">
-                  {mission.completed && (
-                    <span className="absolute right-5 top-5 rounded-md bg-green-600 px-2 py-1 text-xs font-bold text-white">
-                      Completado
-                    </span>
-                  )}
-                  <p className="text-xs">{mission.mission.rewardXp}xp</p>
-                  <div className="mt-1">
-                    <p className="text-lg font-semibold text-blue">
-                      {mission.mission.title}
-                    </p>
-                    <span
-                      className={`text-wrap text-sm ${mission.completed ? "line-through" : ""}`}
+            {dailyMissions.length > 0 ? (
+              dailyMissions.map((mission: MissionProps, index: number) => {
+                return (
+                  <div key={index} className="relative gap-2 p-6">
+                    {mission.completed && (
+                      <span className="absolute right-5 top-5 rounded-md bg-green-600 px-2 py-1 text-xs font-bold text-white">
+                        Completado
+                      </span>
+                    )}
+                    <p className="text-xs">{mission.mission.rewardXp}xp</p>
+                    <div className="mt-1">
+                      <p className="text-lg font-semibold text-blue">
+                        {mission.mission.title}
+                      </p>
+                      <span
+                        className={`text-wrap text-sm ${mission.completed ? "line-through" : ""}`}
+                      >
+                        {mission.mission.description}
+                      </span>
+                    </div>
+                    <p
+                      className={`mt-4 w-full rounded-md py-1 text-center text-xs ${mission.progress === mission.mission.goalValue ? "bg-green-600" : "bg-border/50"}`}
                     >
-                      {mission.mission.description}
-                    </span>
+                      {mission.progress}/{mission.mission.goalValue}
+                    </p>
                   </div>
-                  <p
-                    className={`mt-4 w-full rounded-md py-1 text-center text-xs ${mission.progress === mission.mission.goalValue ? "bg-green-600" : "bg-border/50"}`}
-                  >
-                    {mission.progress}/{mission.mission.goalValue}
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="w-full text-wrap p-6 text-center">
+                Sem missões diárias até o momento
+              </div>
+            )}
           </div>
         </div>
         <div>
@@ -88,33 +94,39 @@ export default async function MissionsPage() {
             expira em <NextMondayCountdown />
           </span>
           <div className="mt-6 divide-y-2 divide-border rounded-lg border-2 border-border shadow-md">
-            {weeklyMissions.map((mission: MissionProps, index: number) => {
-              return (
-                <div key={index} className="relative gap-2 p-6">
-                  {mission.completed && (
-                    <span className="absolute right-5 top-5 rounded-md bg-green-600 px-2 py-1 text-xs font-bold text-white">
-                      Completado
-                    </span>
-                  )}
-                  <p className="text-xs">{mission.mission.rewardXp}xp</p>
-                  <div className="mt-1">
-                    <p className="text-lg font-semibold text-blue">
-                      {mission.mission.title}
-                    </p>
-                    <span
-                      className={`text-wrap text-sm ${mission.completed ? "line-through" : ""}`}
+            {weeklyMissions.length > 0 ? (
+              weeklyMissions.map((mission: MissionProps, index: number) => {
+                return (
+                  <div key={index} className="relative gap-2 p-6">
+                    {mission.completed && (
+                      <span className="absolute right-5 top-5 rounded-md bg-green-600 px-2 py-1 text-xs font-bold text-white">
+                        Completado
+                      </span>
+                    )}
+                    <p className="text-xs">{mission.mission.rewardXp}xp</p>
+                    <div className="mt-1">
+                      <p className="text-lg font-semibold text-blue">
+                        {mission.mission.title}
+                      </p>
+                      <span
+                        className={`text-wrap text-sm ${mission.completed ? "line-through" : ""}`}
+                      >
+                        {mission.mission.description}
+                      </span>
+                    </div>
+                    <p
+                      className={`mt-4 w-full rounded-md py-1 text-center text-xs ${mission.progress === mission.mission.goalValue ? "bg-green-600" : "bg-border/50"}`}
                     >
-                      {mission.mission.description}
-                    </span>
+                      {mission.progress}/{mission.mission.goalValue}
+                    </p>
                   </div>
-                  <p
-                    className={`mt-4 w-full rounded-md py-1 text-center text-xs ${mission.progress === mission.mission.goalValue ? "bg-green-600" : "bg-border/50"}`}
-                  >
-                    {mission.progress}/{mission.mission.goalValue}
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="w-full text-wrap p-6 text-center">
+                Sem missões semanais até o momento
+              </div>
+            )}
           </div>
         </div>
       </div>

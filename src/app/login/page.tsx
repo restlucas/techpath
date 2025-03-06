@@ -24,7 +24,7 @@ export default function Login() {
         <p className="text-sm">Utilize um dos métodos abaixo</p>
 
         <div className="mt-10 flex flex-col gap-4">
-          <button
+          {/* <button
             onClick={() => signIn("linkedin")}
             className="group flex h-auto w-full items-center justify-center gap-2 rounded-lg border-2 border-border p-3 text-blue duration-200 hover:bg-selected"
           >
@@ -34,7 +34,7 @@ export default function Login() {
               className="fill-border duration-200 group-hover:fill-white"
             />
             <span className="font-semibold">LinkedIn</span>
-          </button>
+          </button> */}
 
           <button
             onClick={() => signIn("github")}

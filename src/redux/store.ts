@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import lessonReducer from "./slices/lessonSlice";
 import authReducer from "./slices/authSlice";
+import followReducer from "./slices/followSlice";
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
   reducer: {
-    lesson: lessonReducer,
+    follow: followReducer,
     auth: authReducer,
+    lesson: lessonReducer,
   },
 });
 

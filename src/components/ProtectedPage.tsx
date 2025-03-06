@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchSession } from "@/redux/slices/authSlice";
+import { setFollowing } from "@/redux/slices/followSlice";
 import { AppDispatch } from "@/redux/store";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -20,6 +21,12 @@ export function ProtectedPage({ children }: ProtectedPageProps) {
   useEffect(() => {
     dispatch(fetchSession());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (session) {
+      dispatch(setFollowing(session.user.following));
+    }
+  }, [session]);
 
   useEffect(() => {
     if (status !== "loading" && !session) {
