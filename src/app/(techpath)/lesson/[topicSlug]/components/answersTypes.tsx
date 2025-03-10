@@ -213,7 +213,7 @@ export function TypeMatchPairs({
 
   return (
     <div className="mx-auto mt-20 w-3/4">
-      <div className="grid w-full grid-cols-1 items-center justify-center gap-8 md:grid-cols-2">
+      <div className="grid w-full auto-rows-[100px] grid-cols-1 items-center justify-center gap-8 md:grid-cols-2">
         {shuffledAnswers.map((answer) => (
           <button
             key={answer.id}
@@ -225,7 +225,7 @@ export function TypeMatchPairs({
                 pairObj.pair.some((pairAnswer) => pairAnswer.id === answer.id),
               )
             }
-            className={`w-full text-nowrap rounded-lg border-2 p-6 text-center duration-200 ${getButtonStyles(answer.id)} ${pairsMatch.length === answers.length / 2 && "pointer-events-none"}`}
+            className={`h-full w-full text-wrap rounded-lg border-2 text-center duration-200 ${getButtonStyles(answer.id)} ${pairsMatch.length === answers.length / 2 && "pointer-events-none"}`}
           >
             {answer.text}
           </button>

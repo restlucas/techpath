@@ -128,7 +128,7 @@ export default function TrailPage({
     <section className="relative">
       <Link
         href="/learn"
-        className="absolute -top-10 left-0 duration-200 hover:text-blue"
+        className="absolute -top-7 left-0 duration-200 hover:text-blue"
       >
         <span className="text-xs">Voltar à listagem de trilhas</span>
       </Link>
