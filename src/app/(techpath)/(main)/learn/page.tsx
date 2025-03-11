@@ -17,7 +17,7 @@ type Trail = {
 };
 
 export const metadata: Metadata = {
-  title: "lear | techpath",
+  title: "aprender | techpath",
 };
 
 export default async function LearnPage() {

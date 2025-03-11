@@ -18,9 +18,7 @@ type UserInfo = {
 };
 
 export function LeaderboardList() {
-  const { data, loading, error } = useQuery(GET_LEADERBOARD, {
-    pollInterval: 5000,
-  });
+  const { data, loading, error } = useQuery(GET_LEADERBOARD);
 
   if (loading) {
     return (

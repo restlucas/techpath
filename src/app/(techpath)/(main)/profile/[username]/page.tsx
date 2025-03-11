@@ -70,7 +70,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <section className="m-auto w-[700px]">
+    <>
       <div className="flex items-center justify-center">
         <div className="relative min-h-[120px] min-w-[120px] overflow-hidden rounded-full bg-blue p-1">
           <Image
@@ -163,6 +163,6 @@ export default function ProfilePage() {
           })}
         </div>
       </div>
-    </section>
+    </>
   );
 }

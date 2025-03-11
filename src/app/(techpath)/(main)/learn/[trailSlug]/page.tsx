@@ -118,7 +118,7 @@ export default function TrailPage({
 
   useEffect(() => {
     dispatch(clearLesson());
-  }, []);
+  }, [dispatch]);
 
   if (!selectedTrail) {
     return <div>Trail not found</div>;

@@ -195,10 +195,12 @@ export function TypeMatchPairs({
         playAudio("/audios/wrong.mp3");
       }
 
+      const { id, xp } = activeQuestion;
+
       dispatch(
         addAnsweredQuestion({
-          questionId: activeQuestion.id,
-          xp: activeQuestion.xp,
+          questionId: id,
+          xp: xp,
           isCorrectAnswer: !haveIncorrectPair,
         }),
       );

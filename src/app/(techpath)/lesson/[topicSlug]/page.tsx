@@ -2,7 +2,7 @@
 
 import { Session } from "next-auth";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -65,7 +65,7 @@ function FinishedLesson({
     router.push(`/learn/${redirectUrl}`);
   };
 
-  const finishLesson = async () => {
+  const finishLesson = useCallback(async () => {
     await addLessonResults({
       variables: {
         totalXpEarned: lessonResults,
@@ -74,7 +74,7 @@ function FinishedLesson({
         userId,
       },
     });
-  };
+  }, [addLessonResults, lessonResults, lessonId, userId]);
 
   useEffect(() => {
     if (lessonStatus === "success") {
@@ -84,7 +84,7 @@ function FinishedLesson({
     } else {
       playAudio("/audios/failure.wav");
     }
-  }, [lessonStatus]);
+  }, [lessonStatus, finishLesson]);
 
   return (
     <div className="flex h-screen w-full items-center justify-center">

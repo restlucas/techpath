@@ -20,7 +20,7 @@ type MissionProps = {
 };
 
 export const metadata: Metadata = {
-  title: "missions | techpath",
+  title: "missões | techpath",
 };
 
 export default async function MissionsPage() {

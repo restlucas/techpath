@@ -58,7 +58,7 @@ export function Question({
         handleHasFinishedLesson(true, "success");
       }
     }
-  }, [lesson, questionIndex]);
+  }, [lesson, questionIndex, handleHasFinishedLesson, lessonHistory]);
 
   if (!activeQuestion) {
     return null;
