@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { getSession, signIn } from "next-auth/react";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "./authOptions";
 
 export async function updateSession(redirectUrl: string) {
   const session = await getSession();
