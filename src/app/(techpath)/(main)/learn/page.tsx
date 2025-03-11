@@ -6,7 +6,7 @@ import { GET_TRAILS } from "@/graphql/queries/trail.queries";
 import { Metadata } from "next";
 import { createApolloClient } from "@/lib/apolloClient";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/authOptions";
 
 type Trail = {
   id: string;

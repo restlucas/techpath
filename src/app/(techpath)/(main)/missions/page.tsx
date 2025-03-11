@@ -1,7 +1,7 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { MidnightCountdown, NextMondayCountdown } from "@/components/Countdown";
 import { GET_MISSIONS } from "@/graphql/queries/mission.queries";
 import { createApolloClient } from "@/lib/apolloClient";
+import { authOptions } from "@/utils/authOptions";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 
