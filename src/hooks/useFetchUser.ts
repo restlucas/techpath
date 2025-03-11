@@ -9,19 +9,19 @@ import { GET_USER } from "@/graphql/queries/user.queries";
 const useFetchUser = (session: SessionProps) => {
   const dispatch = useDispatch();
 
-  const fetchUser = async () => {
-    dispatch(setLoading(true));
-    const client = createApolloClient(session);
-
-    const { data } = await client.query({
-      query: GET_USER,
-    });
-
-    dispatch(setUser(data.user.data));
-    dispatch(setLoading(false));
-  };
-
   useEffect(() => {
+    const fetchUser = async () => {
+      dispatch(setLoading(true));
+      const client = createApolloClient(session);
+
+      const { data } = await client.query({
+        query: GET_USER,
+      });
+
+      dispatch(setUser(data.user.data));
+      dispatch(setLoading(false));
+    };
+
     if (session) {
       fetchUser();
     }
