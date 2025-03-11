@@ -1,7 +1,7 @@
 "use client";
 
 import { Session } from "next-auth";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,6 @@ import { getResults, setLesson } from "@/redux/slices/lessonSlice";
 import { RootState } from "@/redux/store";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_LESSON_RESULTS } from "@/graphql/mutation/lesson.mutation";
-import { updateSession } from "@/utils/session";
 import { GET_LESSON } from "@/graphql/queries/lesson.queries";
 import { Question } from "./components/question";
 import { playAudio } from "./components/answersTypes";
@@ -56,13 +55,14 @@ function FinishedLesson({
   redirectUrl,
 }: FinisheLessonProps) {
   const [addLessonResults] = useMutation(ADD_LESSON_RESULTS);
+  const router = useRouter();
 
   const lessonResults = useSelector((state: RootState) =>
     getResults(state.lesson),
   );
 
   const resetLesson = async () => {
-    updateSession(redirectUrl);
+    router.push(`/learn/${redirectUrl}`);
   };
 
   const finishLesson = async () => {

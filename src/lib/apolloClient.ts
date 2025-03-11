@@ -8,15 +8,9 @@ import { RestLink } from "apollo-link-rest";
 
 export type SessionProps = {
   user: {
-    name: string;
     email: string;
-    image: string;
     id: string;
     username: string;
-    totalXp: number;
-    streak: number;
-    createdAt: string;
-    provider: string;
   };
   expires: string;
 };

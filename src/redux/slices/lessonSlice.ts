@@ -53,7 +53,7 @@ const initialState: State = {
 };
 
 const lessonSlice = createSlice({
-  name: "user",
+  name: "lesson",
   initialState,
   reducers: {
     setLesson: (state, action: PayloadAction<Lesson>) => {

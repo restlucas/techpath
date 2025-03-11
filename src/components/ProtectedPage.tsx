@@ -1,7 +1,8 @@
 "use client";
 
+import useFetchUser from "@/hooks/useFetchUser";
+import { SessionProps } from "@/lib/apolloClient";
 import { fetchSession } from "@/redux/slices/authSlice";
-import { setFollowing } from "@/redux/slices/followSlice";
 import { AppDispatch } from "@/redux/store";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -14,19 +15,14 @@ interface ProtectedPageProps {
 
 export function ProtectedPage({ children }: ProtectedPageProps) {
   const { data: session, status } = useSession();
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  const dispatch = useDispatch<AppDispatch>();
+  useFetchUser(session as SessionProps);
 
   useEffect(() => {
     dispatch(fetchSession());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (session) {
-      dispatch(setFollowing(session.user.following));
-    }
-  }, [session]);
 
   useEffect(() => {
     if (status !== "loading" && !session) {

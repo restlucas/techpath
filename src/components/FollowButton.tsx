@@ -4,7 +4,7 @@ import {
   ADD_USER_TO_FOLLOWING,
   REMOVE_USER_FROM_FOLLOWING,
 } from "@/graphql/mutation/user.mutation";
-import { addFollowing, removeFollowing } from "@/redux/slices/followSlice";
+import { addFollowing, removeFollowing } from "@/redux/slices/userSlice";
 import { RootState } from "@/redux/store";
 import {
   ApolloQueryResult,
@@ -30,13 +30,15 @@ type FollowButtonProps = {
 
 export function FollowButton({ userId, refetch }: FollowButtonProps) {
   const dispatch = useDispatch();
-  const following = useSelector((state: RootState) => state.follow.following);
+  const following = useSelector(
+    (state: RootState) => state.user.user?.following,
+  );
 
   const [addUserToFollowing] = useMutation(ADD_USER_TO_FOLLOWING);
   const [removeUserFromFollow] = useMutation(REMOVE_USER_FROM_FOLLOWING);
 
   const handleFollowUser = async (userId: string) => {
-    if (!following.includes(userId)) {
+    if (following && !following.includes(userId)) {
       await addUserToFollowing({
         variables: {
           userIdToFollow: userId,
@@ -56,7 +58,7 @@ export function FollowButton({ userId, refetch }: FollowButtonProps) {
     refetch();
   };
 
-  return following.includes(userId) ? (
+  return following && following.includes(userId) ? (
     <button
       onClick={() => handleFollowUser(userId)}
       className="flex w-[150px] cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-border bg-transparent px-4 py-2 text-green-600 duration-200 hover:bg-selected"

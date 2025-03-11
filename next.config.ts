@@ -7,7 +7,12 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: false,
   images: {
-    domains: ["github.com", "avatars.githubusercontent.com"],
+    domains: [
+      "github.com",
+      "avatars.githubusercontent.com",
+      "lh3.googleusercontent.com",
+      "cdn.jsdelivr.net",
+    ],
   },
 };
 

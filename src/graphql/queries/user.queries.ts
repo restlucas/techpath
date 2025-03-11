@@ -1,5 +1,23 @@
 import { gql } from "@apollo/client";
 
+export const GET_USER = gql`
+  query {
+    user @rest(type: "User", path: "/user/") {
+      data {
+        id
+        name
+        email
+        username
+        image
+        totalXp
+        streak
+        createdAt
+        following
+      }
+    }
+  }
+`;
+
 export const GET_PROFILE = gql`
   query GetTrail($username: String!) {
     profile(username: $username)

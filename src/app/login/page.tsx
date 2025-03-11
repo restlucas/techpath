@@ -1,7 +1,7 @@
 "use client";
 import { signIn, useSession } from "next-auth/react";
 
-import { GithubLogo, LinkedinLogo } from "@phosphor-icons/react";
+import { GithubLogo, GoogleLogo } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -24,17 +24,17 @@ export default function Login() {
         <p className="text-sm">Utilize um dos métodos abaixo</p>
 
         <div className="mt-10 flex flex-col gap-4">
-          {/* <button
-            onClick={() => signIn("linkedin")}
+          <button
+            onClick={() => signIn("google")}
             className="group flex h-auto w-full items-center justify-center gap-2 rounded-lg border-2 border-border p-3 text-blue duration-200 hover:bg-selected"
           >
-            <LinkedinLogo
+            <GoogleLogo
               size={24}
               weight="fill"
               className="fill-border duration-200 group-hover:fill-white"
             />
-            <span className="font-semibold">LinkedIn</span>
-          </button> */}
+            <span className="font-semibold">Gmail</span>
+          </button>
 
           <button
             onClick={() => signIn("github")}
