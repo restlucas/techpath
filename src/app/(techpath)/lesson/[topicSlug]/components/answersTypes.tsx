@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Answer } from "../page";
 import { addAnsweredQuestion, Question } from "@/redux/slices/lessonSlice";
 import { useDispatch } from "react-redux";
@@ -138,44 +138,44 @@ export function TypeMatchPairs({
   handleNextQuestion,
 }: MatchPairsProps) {
   const dispatch = useDispatch();
-  const [shuffledAnswers, setShuffledAnswers] = useState<Answer[] | []>([]);
+  const [shuffledAnswers, setShuffledAnswers] = useState<Answer[]>([]);
   const [pairsMatch, setPairsMatch] = useState<PairProps[]>([]);
-  const [selectedPair, setSelectedPair] = useState<Answer[] | []>([]);
+  const [selectedPair, setSelectedPair] = useState<Answer[]>([]);
 
-  const checkIfCorrect = (pair: Answer[]) => {
+  console.log(pairsMatch);
+
+  const checkIfCorrect = useCallback((pair: Answer[]) => {
     return pair[0].pairId === pair[1].pairId;
-  };
+  }, []);
 
   const handleSelectedPair = (selectedAnswer: Answer) => {
-    setSelectedPair((prevState) => [...prevState, selectedAnswer]);
+    setSelectedPair((prevState) => {
+      if (prevState.length < 2) {
+        return [...prevState, selectedAnswer];
+      }
+      return prevState;
+    });
   };
 
   const getButtonStyles = (answerId: string) => {
-    if (Array.isArray(pairsMatch)) {
-      const foundPair = pairsMatch.find((pairObj) =>
-        pairObj.pair.some((answer) => answer.id === answerId),
-      );
+    const foundPair = pairsMatch.find((pairObj) =>
+      pairObj.pair.some((answer) => answer.id === answerId),
+    );
 
-      if (foundPair) {
-        return foundPair.isCorrect
-          ? "bg-green-600 border-green-600"
-          : "bg-red-600 border-red-600";
-      }
-
-      const isAnswerSelected = selectedPair.find(
-        (pair) => pair.id === answerId,
-      );
-
-      if (isAnswerSelected) {
-        return "bg-blue border-blue";
-      }
-
-      return "border-border hover:border-blue hover:text-blue";
+    if (foundPair) {
+      return foundPair.isCorrect
+        ? "bg-green-600 border-green-600"
+        : "bg-red-600 border-red-600";
     }
+
+    if (selectedPair.some((pair) => pair.id === answerId)) {
+      return "bg-blue border-blue";
+    }
+
     return "border-border hover:border-blue hover:text-blue";
   };
 
-  useEffect(() => {
+  const handleMatchingLogic = useCallback(() => {
     if (selectedPair.length === 2) {
       setPairsMatch((prevState) => [
         ...prevState,
@@ -183,29 +183,37 @@ export function TypeMatchPairs({
       ]);
       setSelectedPair([]);
     }
-  }, [selectedPair]);
+  }, [selectedPair, checkIfCorrect]);
+
+  const handleCompletionCheck = useCallback(() => {
+    if (pairsMatch.length > 0) {
+      if (pairsMatch.length === shuffledAnswers.length / 2) {
+        const haveIncorrectPair = pairsMatch.some((pair) => !pair.isCorrect);
+
+        playAudio(
+          haveIncorrectPair ? "/audios/wrong.mp3" : "/audios/correct.mp3",
+        );
+
+        const { id, xp } = activeQuestion;
+
+        dispatch(
+          addAnsweredQuestion({
+            questionId: id,
+            xp: xp,
+            isCorrectAnswer: !haveIncorrectPair,
+          }),
+        );
+      }
+    }
+  }, [pairsMatch, shuffledAnswers, activeQuestion, dispatch]);
 
   useEffect(() => {
-    if (pairsMatch.length === answers.length / 2) {
-      const haveIncorrectPair = pairsMatch.some((pair) => !pair.isCorrect);
+    handleMatchingLogic();
+  }, [selectedPair, handleMatchingLogic]);
 
-      if (!haveIncorrectPair) {
-        playAudio("/audios/correct.mp3");
-      } else {
-        playAudio("/audios/wrong.mp3");
-      }
-
-      const { id, xp } = activeQuestion;
-
-      dispatch(
-        addAnsweredQuestion({
-          questionId: id,
-          xp: xp,
-          isCorrectAnswer: !haveIncorrectPair,
-        }),
-      );
-    }
-  }, [pairsMatch]);
+  useEffect(() => {
+    handleCompletionCheck();
+  }, [pairsMatch, handleCompletionCheck]);
 
   useEffect(() => {
     const shuffledAnswers = shuffleArray(answers);
@@ -235,7 +243,10 @@ export function TypeMatchPairs({
       </div>
       <div className="mt-10 flex w-full justify-end">
         <button
-          onClick={handleNextQuestion}
+          onClick={() => {
+            setPairsMatch([]);
+            handleNextQuestion();
+          }}
           disabled={pairsMatch.length !== answers.length / 2}
           className={`rounded-xl px-8 py-3 text-base font-bold uppercase duration-200 ${pairsMatch.length === answers.length / 2 ? "point-events-none bg-green-600 hover:bg-green-600/70" : "bg-gray-700"}`}
         >
