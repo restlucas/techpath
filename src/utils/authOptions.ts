@@ -24,10 +24,10 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async jwt({ token, user, profile, account }) {
-      console.log("entering in next-auth callback...");
-      console.log("user: ", user);
+      console.log("JWT callback - user:", user);
+      console.log("JWT callback - profile:", profile);
+      console.log("JWT callback - account:", account);
       if (user) {
-        console.log("user exists");
         const emailUsername = profile?.email?.split("@")[0] || "";
 
         const username = (profile as { login?: string }).login || emailUsername;
@@ -38,7 +38,6 @@ export const authOptions: AuthOptions = {
             account,
             (username as string) || "",
           );
-          console.log("trying to send user to backend...");
 
           token.id = userData.id;
           token.email = userData.email;
