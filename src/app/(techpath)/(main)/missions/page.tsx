@@ -29,6 +29,7 @@ export default async function MissionsPage() {
 
   const {
     data: { missions },
+    loading,
   } = await client.query({
     query: GET_MISSIONS,
   });
@@ -39,6 +40,59 @@ export default async function MissionsPage() {
   const weeklyMissions = missions.data.filter(
     (mission: MissionProps) => mission.mission.frequency === "WEEKLY",
   );
+
+  if (loading) {
+    return (
+      <section className="m-auto h-auto w-auto">
+        <div className="grid grid-cols-1 items-start gap-12 min-[1000px]:grid-cols-2">
+          <div>
+            <h2 className="text-2xl font-bold min-[1100px]:text-4xl">
+              Missões do dia
+            </h2>
+            <span className="text-xs">
+              expira em <MidnightCountdown />
+            </span>
+            <div className="mt-6 divide-y-2 divide-border overflow-hidden rounded-lg border-2 border-border shadow-md">
+              {Array.from({ length: 3 }).map((_, index) => {
+                return (
+                  <div key={index} className="relative p-6">
+                    <div className="h-4 w-[50px] animate-pulse rounded-lg bg-selected" />
+                    <div className="mt-1">
+                      <div className="h-7 w-[150px] animate-pulse rounded-lg bg-selected" />
+                      <div className="mt-2 h-4 w-full animate-pulse rounded-lg bg-selected" />
+                    </div>
+                    <div className="mt-4 h-6 w-full animate-pulse rounded-lg bg-selected" />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold min-[1100px]:text-4xl">
+              Missões da semana
+            </h2>
+            <span className="text-xs">
+              expira em <NextMondayCountdown />
+            </span>
+            <div className="mt-6 divide-y-2 divide-border overflow-hidden rounded-lg border-2 border-border shadow-md">
+              {Array.from({ length: 3 }).map((_, index) => {
+                return (
+                  <div key={index} className="relative p-6">
+                    <div className="h-4 w-[50px] animate-pulse rounded-lg bg-selected" />
+                    <div className="mt-1">
+                      <div className="h-7 w-[150px] animate-pulse rounded-lg bg-selected" />
+                      <div className="mt-2 h-4 w-full animate-pulse rounded-lg bg-selected" />
+                    </div>
+                    <div className="mt-4 h-6 w-full animate-pulse rounded-lg bg-selected" />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="m-auto h-auto w-auto">

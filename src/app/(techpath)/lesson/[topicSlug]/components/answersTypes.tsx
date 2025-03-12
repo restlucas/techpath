@@ -142,8 +142,6 @@ export function TypeMatchPairs({
   const [pairsMatch, setPairsMatch] = useState<PairProps[]>([]);
   const [selectedPair, setSelectedPair] = useState<Answer[]>([]);
 
-  console.log(pairsMatch);
-
   const checkIfCorrect = useCallback((pair: Answer[]) => {
     return pair[0].pairId === pair[1].pairId;
   }, []);

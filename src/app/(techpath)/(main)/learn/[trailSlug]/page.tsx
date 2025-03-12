@@ -95,30 +95,52 @@ export default function TrailPage({
   params: Promise<{ trailSlug: string }>;
 }) {
   const { trailSlug } = use(params);
-  const { data } = useQuery(GET_TRAIL, {
+  const { data, loading } = useQuery(GET_TRAIL, {
     variables: { trailSlug: trailSlug },
     fetchPolicy: "no-cache",
   });
 
   const dispatch = useDispatch();
-  // const { data } = useQuery(GET_TRAIL, {
-  //   variables: { trailSlug: params.trailSlug },
-  //   fetchPolicy: "no-cache",
-  // });
-  // const session = await getServerAuth(); // Obtém a sessão no servidor
-  // const userId = session?.user?.id || "";
-
-  // const { data } = await client.query({
-  //   query: GET_TRAIL,
-  //   variables: { trailSlug: params.trailSlug, userId },
-  //   fetchPolicy: "no-cache",
-  // });
 
   const selectedTrail = data ? (data.trail.data as Trail) : null;
 
   useEffect(() => {
     dispatch(clearLesson());
   }, [dispatch]);
+
+  if (loading) {
+    return (
+      <section>
+        <div className="h-12 w-[300px] animate-pulse rounded-md bg-selected" />
+        <div className="mt-2 h-4 w-[400px] animate-pulse rounded-md bg-selected" />
+
+        <div className="mt-8 flex items-center justify-start gap-4">
+          {Array.from({ length: 3 }).map((_, index: number) => {
+            return (
+              <div
+                key={index}
+                className="h-7 w-[100px] animate-pulse rounded-2xl bg-selected"
+              />
+            );
+          })}
+        </div>
+
+        <div className="mt-20 h-9 w-[270px] animate-pulse rounded-md bg-selected" />
+        <div className="mt-2 h-4 w-[400px] animate-pulse rounded-md bg-selected" />
+
+        <div className="relative mt-8 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, index) => {
+            return (
+              <div
+                key={index}
+                className="h-[132px] w-full animate-pulse rounded-lg bg-selected"
+              />
+            );
+          })}
+        </div>
+      </section>
+    );
+  }
 
   if (!selectedTrail) {
     return <div>Trail not found</div>;

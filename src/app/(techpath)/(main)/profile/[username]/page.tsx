@@ -62,7 +62,47 @@ export default function ProfilePage() {
   }, [followingData]);
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return (
+      <>
+        <div className="flex items-center justify-center">
+          <div className="relative min-h-[120px] min-w-[120px] animate-pulse overflow-hidden rounded-full bg-selected" />
+        </div>
+
+        <div className="mb-8 flex w-full gap-4">
+          <div className="flex flex-1 flex-col items-start justify-start">
+            <div className="h-10 w-[250px] animate-pulse rounded-lg bg-selected" />
+            <div className="mt-2 h-6 w-[150px] animate-pulse rounded-lg bg-selected" />
+            <div className="mt-4 h-6 w-[200px] animate-pulse rounded-lg bg-selected" />
+
+            <div className="mt-2 flex items-start justify-start gap-2">
+              <div className="h-6 w-[100px] animate-pulse rounded-lg bg-selected" />
+              <div className="h-6 w-[100px] animate-pulse rounded-lg bg-selected" />
+            </div>
+          </div>
+        </div>
+
+        <div className="h-[2px] w-full rounded-md bg-border" />
+
+        <div className="mt-8">
+          <div className="h-11 w-[200px] animate-pulse rounded-lg bg-selected" />
+
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="flex cursor-default items-center justify-between rounded-lg border-2 border-border px-6 py-3 shadow-md">
+              <div className="flex-1">
+                <div className="h-8 w-6 animate-pulse rounded-lg bg-selected" />
+                <div className="mt-2 h-8 w-[150px] animate-pulse rounded-lg bg-selected" />
+              </div>
+            </div>
+            <div className="flex cursor-default items-center justify-between rounded-lg border-2 border-border px-6 py-3 shadow-md">
+              <div className="flex-1">
+                <div className="h-8 w-6 animate-pulse rounded-lg bg-selected" />
+                <div className="mt-2 h-8 w-[150px] animate-pulse rounded-lg bg-selected" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
   }
 
   if (!profile) {

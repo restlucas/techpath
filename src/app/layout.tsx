@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { AppProviders } from "@/components/AppProviders";
 import { Quicksand } from "next/font/google";
@@ -10,11 +9,6 @@ const quicksand = Quicksand({
   weight: ["500", "600", "700"],
   display: "swap",
 });
-
-export const metadata: Metadata = {
-  title: "techpath | home",
-  description: "learning is funny",
-};
 
 export default async function RootLayout({
   children,

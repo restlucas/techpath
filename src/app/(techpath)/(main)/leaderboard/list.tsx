@@ -23,9 +23,7 @@ export function LeaderboardList() {
   if (loading) {
     return (
       <div className="flex h-[300px] items-center justify-center">
-        <p className="w-full rounded-lg border-2 border-border p-6 text-center font-bold shadow-md">
-          Carregando informações
-        </p>
+        <div className="h-5 w-5 animate-spin rounded-full border-2 border-border border-t-transparent" />
       </div>
     );
   }
