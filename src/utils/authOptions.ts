@@ -25,6 +25,7 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user, profile, account }) {
       console.log("entering in next-auth callback...");
+      console.log("user: ", user);
       if (user) {
         console.log("user exists");
         const emailUsername = profile?.email?.split("@")[0] || "";
