@@ -24,8 +24,26 @@ export function LeaderboardList() {
 
   if (loading) {
     return (
-      <div className="flex h-[300px] items-center justify-center">
-        <div className="h-5 w-5 animate-spin rounded-full border-2 border-border border-t-transparent" />
+      <div className="mt-8 flex flex-col gap-4">
+        {Array.from({ length: 5 }).map((_, index) => {
+          return (
+            <div
+              key={index}
+              className="flex items-center justify-start rounded-2xl px-4 py-2 duration-200"
+            >
+              <div className="mr-4 flex w-10 items-center justify-center">
+                <div className="h-7 w-6 animate-pulse rounded-lg bg-selected" />
+              </div>
+              <div className="flex flex-1 items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="relative min-h-12 min-w-12 animate-pulse overflow-hidden rounded-full bg-selected" />
+                  <div className="h-6 w-[300px] animate-pulse rounded-lg bg-selected" />
+                </div>
+                <div className="h-6 w-[70px] animate-pulse rounded-lg bg-selected" />
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }
