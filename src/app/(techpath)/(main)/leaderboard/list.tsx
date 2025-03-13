@@ -18,7 +18,9 @@ type UserInfo = {
 };
 
 export function LeaderboardList() {
-  const { data, loading, error } = useQuery(GET_LEADERBOARD);
+  const { data, loading, error } = useQuery(GET_LEADERBOARD, {
+    fetchPolicy: "no-cache",
+  });
 
   if (loading) {
     return (

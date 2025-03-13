@@ -43,10 +43,12 @@ export default function ProfilePage() {
 
   const { data, loading } = useQuery(GET_PROFILE, {
     variables: { username: username },
+    fetchPolicy: "no-cache",
   });
 
   const { data: followingData, refetch } = useQuery(GET_FOLLOWING, {
     variables: { username: username },
+    fetchPolicy: "no-cache",
   });
 
   useEffect(() => {
